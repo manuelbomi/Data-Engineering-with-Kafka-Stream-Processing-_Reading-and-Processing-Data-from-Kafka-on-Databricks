@@ -28,6 +28,19 @@ Databricks leverages Apache Spark Structured Streaming for stream processing, en
         StructField("name", StringType()),
         StructField("value", IntegerType())
     ])
+```
+---
+
+
+
+#### Parse the 'value' column (Kafka message payload) in the desired format. We have chosen JSON as the format in this instance.
+---
+```ruby
+    processed_df = df.selectExpr("CAST(value AS STRING) as json_data") \
+                     .withColumn("data", from_json(col("json_data"), schema)) \
+                     .select("data.*") # Select all fields from the parsed 'data' struct
+```
+---
 
 
 
