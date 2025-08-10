@@ -31,8 +31,6 @@ Databricks leverages Apache Spark Structured Streaming for stream processing, en
 ```
 ---
 
-
-
 #### Parse the 'value' column (Kafka message payload) in the desired format. We have chosen JSON as the format in this instance.
 ---
 ```ruby
@@ -41,6 +39,24 @@ Databricks leverages Apache Spark Structured Streaming for stream processing, en
                      .select("data.*") # Select all fields from the parsed 'data' struct
 ```
 ---
+
+#### Write to the Delta Lake. Delta Lake, available on Databricks, provides ACID properties and supports continuous data ingestion.
+---
+```ruby
+    query = (processed_df.writeStream
+      .format("delta")   #This will specify the Delta Lake as the sink.
+      .outputMode("append") # This defines how the new data is written viz: append, complete, update.  
+                                                              # Append is used in this instance 
+      .option("checkpointLocation", "/path/to/checkpoint/directory") # Essential for fault tolerance. It
+                                                           # stores metadata about the streaming session progress
+      .toTable("your_delta_table_name"))
+
+    # To start the stream and wait for termination (e.g., in a notebook)
+    # query.awaitTermination()
+
+```
+---
+
 
 
 
