@@ -13,7 +13,7 @@ Databricks leverages Apache Spark Structured Streaming for stream processing, en
       .option("subscribe", "<your_kafka_topic>")
       .option("startingOffsets", "latest") # Start reading from the latest available offset
       .load())
----
+
 
 
 
