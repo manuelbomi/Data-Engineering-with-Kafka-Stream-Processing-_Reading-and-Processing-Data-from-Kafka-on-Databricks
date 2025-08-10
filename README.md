@@ -13,6 +13,7 @@ Databricks leverages Apache Spark Structured Streaming for stream processing, en
       .option("subscribe", "<your_kafka_topic>")
       .option("startingOffsets", "latest") # Start reading from the latest available offset
       .load())
+```
 ---
 
 #### Processing the Kafka Stream. The raw Kafka messages (often in binary format) are typically parsed and transformed. For instance, if the messages are JSON strings, they can be parsed into a structured schema.
