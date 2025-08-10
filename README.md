@@ -15,6 +15,21 @@ Databricks leverages Apache Spark Structured Streaming for stream processing, en
       .load())
 
 
+#### Processing the Kafka Stream. The raw Kafka messages (often in binary format) are typically parsed and transformed. For instance, if the messages are JSON strings, they can be parsed into a structured schema.
+---
+```ruby
+    from pyspark.sql.functions import from_json, col
+    from pyspark.sql.types import StructType, StructField, StringType, IntegerType
+
+    # Define your schema based on the expected JSON data structure. Inferschema is not used in this instance.
+    schema = StructType([
+        StructField("id", IntegerType()),
+        StructField("name", StringType()),
+        StructField("value", IntegerType())
+    ])
+
+
+
 
 
 
